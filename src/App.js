@@ -21,8 +21,7 @@ class App extends React.Component {
     const { name, type } = target;
     const value = type === 'checkbox' ? target.checked : target.value;
     this.setState(({ [name]: value }), () => {
-      const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-        cardImage } = this.state;
+      const { cardName, cardDescription, cardImage } = this.state;
       if (cardName && cardDescription && cardImage) {
         this.setState({ isSaveButtonDisabled: false });
       } else {
