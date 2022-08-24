@@ -15,4 +15,14 @@ code {
 .flex {
   display: flex;
   flex-direction: column;
+  padding: 30px
+}
+
+.column {
+  display: flex;
+  flex-direction: row;
+}
+
+.preview {
+  background-color: red;
 }

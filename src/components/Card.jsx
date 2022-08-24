@@ -6,7 +6,7 @@ export default class Card extends Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo } = this.props;
     return (
-      <>
+      <div className="preview">
         <p data-testid="name-card">{cardName}</p>
         <p data-testid="description-card">{cardDescription}</p>
         <p data-testid="attr1-card">{cardAttr1}</p>
@@ -15,7 +15,7 @@ export default class Card extends Component {
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
         <p data-testid="rare-card">{cardRare}</p>
         { (cardTrunfo) && (<p data-testid="trunfo-card">Super Trunfo</p>) }
-      </>
+      </div>
     );
   }
 }
