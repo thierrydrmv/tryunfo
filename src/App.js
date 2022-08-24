@@ -72,7 +72,14 @@ class App extends React.Component {
           <Card
             { ...this.state }
           />
-          {data.map((card) => <Card key={ card.cardName } { ...card } />)}
+          {data.map((card, index) => (
+            <div
+              key={ index }
+            >
+              <Card key={ card.cardName } { ...card } />
+              <button data-testid="delete-button" type="button">Excluir</button>
+            </div>
+          ))}
         </div>
       </div>
     );
