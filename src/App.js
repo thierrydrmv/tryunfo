@@ -14,6 +14,7 @@ class App extends React.Component {
     cardTrunfo: false,
     hasTrunfo: false,
     isSaveButtonDisabled: true,
+    data: [],
   };
 
   onInputChange = ({ target }) => {
@@ -30,7 +31,17 @@ class App extends React.Component {
     });
   };
 
-  onSaveButtonClick = () => {
+  onSaveButtonClick = (objInfo) => {
+    this.setState((before) => ({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+      data: [...before.data, objInfo],
+    }));
   };
 
   render() {
