@@ -4,8 +4,26 @@ import PropTypes from 'prop-types';
 export default class Form extends Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo,
+      cardImage, cardRare, cardTrunfo, hasTrunfo,
       isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
+    let render;
+    if (hasTrunfo) {
+      render = <p>Você já tem um Super Trunfo em seu baralho</p>;
+    } else {
+      render = (
+        <label htmlFor="super">
+          Super Trunfo
+          <input
+            type="checkbox"
+            name="cardTrunfo"
+            id=""
+            data-testid="trunfo-input"
+            checked={ cardTrunfo }
+            onChange={ onInputChange }
+          />
+        </label>
+      );
+    }
     return (
       <div className="">
         <form className="flex">
@@ -86,18 +104,8 @@ export default class Form extends Component {
               <option value="muito raro">muito raro</option>
             </select>
           </label>
-          <label htmlFor="super">
-            Super Trunfo
-            <input
-              type="checkbox"
-              name="cardTrunfo"
-              id=""
-              data-testid="trunfo-input"
-              checked={ cardTrunfo }
-              onChange={ onInputChange }
-            />
-          </label>
           <div>
+            { render }
             <button
               type="button"
               name="isSaveButtonDisabled"
@@ -134,5 +142,6 @@ Form.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
 };

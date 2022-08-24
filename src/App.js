@@ -49,7 +49,12 @@ class App extends React.Component {
       cardImage: '',
       cardRare: 'normal',
       data: [...before.data, objInfo],
-    }));
+    }), () => {
+      const { cardTrunfo } = this.state;
+      if (cardTrunfo) {
+        this.setState({ hasTrunfo: true });
+      }
+    });
   };
 
   render() {
