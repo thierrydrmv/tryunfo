@@ -54,10 +54,12 @@ class App extends React.Component {
       if (cardTrunfo) {
         this.setState({ hasTrunfo: true });
       }
+      this.setState({ cardTrunfo: false });
     });
   };
 
   render() {
+    const { data } = this.state;
     return (
       <div className="flex">
         <h1>Adicionar Nova Carta</h1>
@@ -70,6 +72,7 @@ class App extends React.Component {
           <Card
             { ...this.state }
           />
+          {data.map((card) => <Card key={ card.cardName } { ...card } />)}
         </div>
       </div>
     );
