@@ -15,6 +15,7 @@ class App extends React.Component {
     hasTrunfo: false,
     isSaveButtonDisabled: true,
     data: [],
+    filter: '',
   };
 
   onInputChange = ({ target }) => {
@@ -67,13 +68,17 @@ class App extends React.Component {
       const { cardTrunfo } = this.state;
       if (!cardTrunfo) {
         this.setState({ hasTrunfo: false });
+        card.remove();
       }
     });
-    card.remove();
+  };
+
+  filterName = ({ target }) => {
+    this.setState({ filter: target.value });
   };
 
   render() {
-    const { data } = this.state;
+    const { data, filter } = this.state;
     return (
       <div className="flex">
         <h1>Adicionar Nova Carta</h1>
@@ -86,21 +91,32 @@ class App extends React.Component {
           <Card
             { ...this.state }
           />
-          {data.map((card) => (
-            <div
-              key={ card.cardName }
-              className="flex"
-            >
-              <Card key={ card.cardName } { ...card } />
-              <button
-                data-testid="delete-button"
-                type="button"
-                onClick={ this.onDeleteCard }
+        </div>
+        <div>
+          <h2>Todas as cartas</h2>
+          <form>
+            <input
+              data-testid="name-filter"
+              type="text"
+              onChange={ this.filterName }
+            />
+          </form>
+          {data
+            .filter((card) => card.cardName.includes(filter))
+            .map((card) => (
+              <div
+                key={ card.cardName }
               >
-                Excluir
-              </button>
-            </div>
-          ))}
+                <Card key={ card.cardName } { ...card } />
+                <button
+                  data-testid="delete-button"
+                  type="button"
+                  onClick={ this.onDeleteCard }
+                >
+                  Excluir
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     );
