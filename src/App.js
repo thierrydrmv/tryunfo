@@ -15,7 +15,8 @@ class App extends React.Component {
     hasTrunfo: false,
     isSaveButtonDisabled: true,
     data: [],
-    filter: '',
+    filterName: '',
+    filterRare: '',
   };
 
   onInputChange = ({ target }) => {
@@ -74,11 +75,15 @@ class App extends React.Component {
   };
 
   filterName = ({ target }) => {
-    this.setState({ filter: target.value });
+    this.setState({ filterName: target.value });
+  };
+
+  filterRare = ({ target }) => {
+    this.setState({ filterRare: target.value });
   };
 
   render() {
-    const { data, filter } = this.state;
+    const { data, filterName, filterRare } = this.state;
     return (
       <div className="flex">
         <h1>Adicionar Nova Carta</h1>
@@ -100,9 +105,28 @@ class App extends React.Component {
               type="text"
               onChange={ this.filterName }
             />
+            <select
+              data-testid="rare-filter"
+              onChange={ this.filterRare }
+            >
+              <option value="">todas</option>
+              <option value="normal">normal</option>
+              <option value="raro">raro</option>
+              <option value="muito raro">muito raro</option>
+            </select>
           </form>
           {data
-            .filter((card) => card.cardName.includes(filter))
+          // card.cardRare.includes(filterRare)
+            .filter((card) => card.cardName.includes(filterName))
+            .filter((card) => {
+              let answer;
+              if (filterRare === 'raro' && filterRare !== '') {
+                answer = card.cardRare === filterRare;
+              } else {
+                answer = card.cardRare.includes(filterRare);
+              }
+              return answer;
+            })
             .map((card) => (
               <div
                 key={ card.cardName }
