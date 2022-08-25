@@ -10,7 +10,7 @@ class App extends React.Component {
     cardAttr2: '',
     cardAttr3: '',
     cardImage: '',
-    cardRare: '',
+    cardRare: 'normal',
     cardTrunfo: false,
     hasTrunfo: false,
     isSaveButtonDisabled: true,
@@ -58,6 +58,20 @@ class App extends React.Component {
     });
   };
 
+  onDeleteCard = ({ target }) => {
+    const { data } = this.state;
+    const card = target.parentNode;
+    const cardValue = card.children[0].children[0].innerText;
+    this.setState(() => ({
+      data: data.filter((e) => e.cardName !== cardValue) }), () => {
+      const { cardTrunfo } = this.state;
+      if (!cardTrunfo) {
+        this.setState({ hasTrunfo: false });
+      }
+    });
+    card.remove();
+  };
+
   render() {
     const { data } = this.state;
     return (
@@ -72,12 +86,19 @@ class App extends React.Component {
           <Card
             { ...this.state }
           />
-          {data.map((card, index) => (
+          {data.map((card) => (
             <div
-              key={ index }
+              key={ card.cardName }
+              className="flex"
             >
               <Card key={ card.cardName } { ...card } />
-              <button data-testid="delete-button" type="button">Excluir</button>
+              <button
+                data-testid="delete-button"
+                type="button"
+                onClick={ this.onDeleteCard }
+              >
+                Excluir
+              </button>
             </div>
           ))}
         </div>
