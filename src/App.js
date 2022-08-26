@@ -17,6 +17,7 @@ class App extends React.Component {
     data: [],
     filterName: '',
     filterRare: '',
+    filterTrunfo: false,
   };
 
   onInputChange = ({ target }) => {
@@ -82,8 +83,17 @@ class App extends React.Component {
     this.setState({ filterRare: target.value });
   };
 
+  filterTrunfo = () => {
+    const { filterTrunfo } = this.state;
+    if (filterTrunfo) {
+      this.setState({ filterTrunfo: false });
+    } else {
+      this.setState({ filterTrunfo: true });
+    }
+  };
+
   render() {
-    const { data, filterName, filterRare } = this.state;
+    const { data, filterName, filterRare, filterTrunfo } = this.state;
     return (
       <div className="flex">
         <h1>Adicionar Nova Carta</h1>
@@ -104,28 +114,40 @@ class App extends React.Component {
               data-testid="name-filter"
               type="text"
               onChange={ this.filterName }
+              disabled={ filterTrunfo }
             />
             <select
               data-testid="rare-filter"
               onChange={ this.filterRare }
+              disabled={ filterTrunfo }
             >
               <option value="">todas</option>
               <option value="normal">normal</option>
               <option value="raro">raro</option>
               <option value="muito raro">muito raro</option>
             </select>
+            <label htmlFor="super">
+              Super Trunfo
+              <input
+                data-testid="trunfo-filter"
+                type="checkbox"
+                onClick={ this.filterTrunfo }
+              />
+            </label>
           </form>
           {data
-          // card.cardRare.includes(filterRare)
             .filter((card) => card.cardName.includes(filterName))
             .filter((card) => {
-              let answer;
               if (filterRare === 'raro' && filterRare !== '') {
-                answer = card.cardRare === filterRare;
-              } else {
-                answer = card.cardRare.includes(filterRare);
+                return card.cardRare === filterRare;
               }
-              return answer;
+              return card.cardRare.includes(filterRare);
+            })
+            .filter((card) => {
+              if (filterTrunfo) {
+                return card.cardTrunfo === true;
+              }
+              return true;
             })
             .map((card) => (
               <div
