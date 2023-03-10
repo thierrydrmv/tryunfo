@@ -15,7 +15,11 @@ code {
 .flex {
   display: flex;
   flex-direction: column;
-  padding: 30px
+  padding: 30px;
+}
+
+.filter {
+  width: 40%;
 }
 
 .column {
@@ -24,5 +28,9 @@ code {
 }
 
 .preview {
+  display: flex;
+  flex-direction: column;
   background-color: red;
+  width: 20%;
+  height: 20%;
 }

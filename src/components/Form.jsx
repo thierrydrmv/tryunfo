@@ -2,10 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Form extends Component {
+  salvaDados = (event) => {
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+      cardImage, cardRare, cardTrunfo, onSaveButtonClick } = this.props;
+    event.preventDefault();
+    onSaveButtonClick(
+      { cardName,
+        cardDescription,
+        cardImage,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardRare,
+        cardTrunfo },
+    );
+  };
+
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo,
-      isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
+      isSaveButtonDisabled, onInputChange } = this.props;
     let render;
     if (hasTrunfo) {
       render = <p>Você já tem um Super Trunfo em seu baralho</p>;
@@ -107,20 +123,11 @@ export default class Form extends Component {
           <div>
             { render }
             <button
-              type="button"
+              type="submit"
               name="isSaveButtonDisabled"
               data-testid="save-button"
               disabled={ isSaveButtonDisabled }
-              onClick={ () => onSaveButtonClick(
-                { cardName,
-                  cardDescription,
-                  cardImage,
-                  cardAttr1,
-                  cardAttr2,
-                  cardAttr3,
-                  cardRare,
-                  cardTrunfo },
-              ) }
+              onClick={ this.salvaDados }
             >
               Salvar
             </button>

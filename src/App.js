@@ -109,7 +109,8 @@ class App extends React.Component {
         </div>
         <div>
           <h2>Todas as cartas</h2>
-          <form>
+          <form className="flex filter">
+            <h4>Filtros de busca</h4>
             <input
               data-testid="name-filter"
               type="text"
